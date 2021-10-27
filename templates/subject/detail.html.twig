@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} FPT {% endblock %}
+
+{% block body %}
+<div class="container">
+   <h4 class="text-primary text-center">subjects manager</h4>
+   <a class="btn btn-outline-primary" href="{{ path('subject_add') }}">add subject</a>
+   <table class="table table-striped text-center">
+      <thead>
+         <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Price</th>
+           {% if is_granted('ROLE_ADMIN')%}
+               <th>Actions</th>
+            {% else %}
+            {% endif %}
+         </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td>{{ subject.id }}</td>
+            <td>{{ subject.name}}</td>
+            <td>{{ subject.code}}</td>
+            <td>{{ subject.price}}$</td>
+            <td> 
+            {% if is_granted('ROLE_ADMIN')%}
+               <a class="btn btn-primary" href="{{ path('subject_edit', {'id': subject.id }) }}">EDIT</a>
+               <a class="btn btn-warning" href="{{ path('subject_delete', {'id': subject.id }) }}"
+               onclick="return confirm('Are you sure to delete this subject ?')">DELETE</a>
+            </td>
+            {% else %}
+            {% endif %}
+         </tr> 
+      </tbody>
+   </table>
+</div>
+{% endblock %}

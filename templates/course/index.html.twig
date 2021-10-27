@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} FPT {% endblock %}
+
+{% block body %}
+<div class="container">
+   <h4 class="text-primary text-center">COURSE MANAGER</h4>
+   {% if is_granted('ROLE_ADMIN')%}
+   <a class="btn btn-outline-primary" href="{{ path('course_add') }}">ADD COURSE</a>
+    {% endif %}
+   <table class="table table-striped text-center">
+      <thead>
+         <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+         </tr>
+      </thead>
+      <tbody>
+      {% for course in courses %}
+          <tr>
+          
+            <td>{{ course.id }}</td>
+            <td>{{ course.name }}</td>
+          
+            <td>
+            {% if is_granted('ROLE_ADMIN')%}
+               <a class="btn btn-info" href="{{ path('course_detail', {'id' : course.id }) }}">DETAIL</a>
+               <a class="btn btn-primary" href="{{ path('course_edit', {'id': course.id }) }}">EDIT</a>
+               <a class="btn btn-warning" href="{{ path('course_delete', {'id': course.id }) }}"
+               onclick="return confirm('Are you sure to delete this course ?')">DELETE</a>
+            </td>
+            {% else %}
+               <a class="btn btn-info" href="{{ path('course_detail', {'id' : course.id }) }}">DETAIL</a>
+            {% endif %}
+         </tr>
+      {% endfor %}     
+      </tbody>
+   </table>
+</div>
+{% endblock %}
